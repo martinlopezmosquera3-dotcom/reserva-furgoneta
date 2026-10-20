@@ -1,5 +1,5 @@
 const SUPABASE_URL = 'https://ttykupmecaniqtkaslce.supabase.co/rest/v1/';
-const SUPABASE_ANON_KEY = 'TUS_DATOS_DE_SUPABASE_ANON_KEY';
+const SUPABASE_ANON_KEY = 'sb_publishable_02_uj3SO3i4p0xYRMUVi8w_ucVIb-PE';
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -46,41 +46,31 @@ async function crearReserva(evento) {
 
 //Calendar
 
-document.addEventListener('DOMContentLoaded', async function() {
-  const calendarEl = document.getElementById('calendar');
+const calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: 'dayGridMonth',
+  locale: 'es',
+  headerToolbar: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth' // Quitamos la vista semanal por horas si no la necesitas
+  },
+  events: eventosFormateados
+});
 
-  // 1. Obtener las reservas de Supabase
-  const { data: reservas, error } = await supabase
-    .from('reservas')
-    .select('*');
+const eventosFormateados = reservas.map(reserva => {
+  // Cortamos la cadena para quedarnos solo con los primeros 10 caracteres (YYYY-MM-DD)
+  const fechaInicioLimpia = reserva.fecha_inicio.split('T')[0];
+  
+  // Nota: FullCalendar, para eventos de varios días (allDay), 
+  // a veces requiere que la fecha de fin sea el día *siguiente* para que pinte bien la celda final.
+  // Si quieres que pinte el día exacto, puedes usar la misma fecha o ajustarla si es necesario.
+  const fechaFinLimpia = reserva.fecha_fin ? reserva.fecha_fin.split('T')[0] : fechaInicioLimpia;
 
-  if (error) {
-    console.error('Error al cargar reservas:', error);
-    return;
-  }
-
-  // 2. Transformar los datos de Supabase al formato que pide FullCalendar
-  // FullCalendar necesita objetos con 'title', 'start' y 'end'
-  const eventosFormateados = reservas.map(reserva => {
-    return {
-      title: `Ocupada (${reserva.nombre_socio})`,
-      start: reserva.fecha_inicio,
-      end: reserva.fecha_fin,
-      color: '#e74c3c' // Rojo para indicar que está ocupado
-    };
-  });
-
-  // 3. Inicializar el calendario
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth', // Vista mensual por defecto
-    locale: 'es', // Idioma español
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek'
-    },
-    events: eventosFormateados // Aquí cargamos las reservas de Supabase
-  });
-
-  calendar.render();
+  return {
+    title: `Furgoneta reservada: ${reserva.nombre_socio}`,
+    start: fechaInicioLimpia,
+    end: fechaFinLimpia,
+    allDay: true, // Esto fuerza a que ocupe la celda del día entero sin mostrar horas
+    color: '#e74c3c'
+  };
 });

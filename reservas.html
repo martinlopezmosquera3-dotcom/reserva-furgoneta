@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reservas</title>
+        <meta name="description" content="Reservas de la furgoneta">
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+<body>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <script src="./script.js"></script>
+    <h1>Proceso para reservar la furgoneta</h1>
+     <br>Que entrenador va a usar la furgoneta<br>
+          <select name="entrenador"> 
+                <option value="" selected="selected">--Selecciona--</option>
+                <option value="1">Jose</option>   
+                <option value="2">Iria</option> 
+                <option value="3">Berto</option>
+                <option value="4">Santi</option> 
+                <option value="5">Santi Jefe</option> 
+                
+            </select>
+            <br>
+            <br>Que equipo va a usar la furgoneta<br> 
+            <select name="equipo">
+                <option value="" selected="selected">--Selecciona--</option>
+                <option value="1">Natación</option>
+                <option VALUE="2">Triatlon</option>
+            </select name>
+     <p>Donde se va a ir</p>
+    <textarea name="presentacion" cols="50" rows="2"></textarea><br>
+    <div id="calendar" style="max-width: 900px; margin: 40px auto;">
+        <form id="formReserva">
+            <label for="nombre">Tu Nombre:</label>
+                <input type="text" id="nombre" required><br>
+            
+            <label for="dni">DNI:</label>
+                <input type="text" id="dni" required><br>
+
+            <label for="fechaInicio">Fecha y hora de recogida:</label>
+                <input type="datetime-local" id="fechaInicio" required><br>
+
+            <label for="fechaFin">Fecha y hora de devolución:</label>
+                <input type="datetime-local" id="fechaFin" required><br>
+                <br>
+            <button type="submit">Confirmar Reserva</button>   
+        </form>
+    </div>
+    <p>Anotaciones</p>
+    <textarea name="presentacion" cols="50" rows="10"></textarea><br><br>
+    <input type="submit" name="submit" value="Enviar"/>
+    <input type="reset" name="reset" value="reiniciar"/><br>
+</body>
+</html>

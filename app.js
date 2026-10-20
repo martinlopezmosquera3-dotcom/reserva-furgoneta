@@ -42,3 +42,45 @@ async function crearReserva(evento) {
     window.location.href = 'index.html'; // Volver al inicio
   }
 }
+
+
+//Calendar
+
+document.addEventListener('DOMContentLoaded', async function() {
+  const calendarEl = document.getElementById('calendar');
+
+  // 1. Obtener las reservas de Supabase
+  const { data: reservas, error } = await supabase
+    .from('reservas')
+    .select('*');
+
+  if (error) {
+    console.error('Error al cargar reservas:', error);
+    return;
+  }
+
+  // 2. Transformar los datos de Supabase al formato que pide FullCalendar
+  // FullCalendar necesita objetos con 'title', 'start' y 'end'
+  const eventosFormateados = reservas.map(reserva => {
+    return {
+      title: `Ocupada (${reserva.nombre_socio})`,
+      start: reserva.fecha_inicio,
+      end: reserva.fecha_fin,
+      color: '#e74c3c' // Rojo para indicar que está ocupado
+    };
+  });
+
+  // 3. Inicializar el calendario
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth', // Vista mensual por defecto
+    locale: 'es', // Idioma español
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek'
+    },
+    events: eventosFormateados // Aquí cargamos las reservas de Supabase
+  });
+
+  calendar.render();
+});

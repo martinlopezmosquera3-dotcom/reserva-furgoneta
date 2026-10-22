@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Reservas de la furgoneta</title>
-        <meta name="description" content="Reservas de la furgoneta">
-        <link rel="stylesheet" href="./styles.css">
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas de la furgoneta</title>
+    <meta name="description" content="Reservas de la furgoneta">
+    <link rel="stylesheet" href="./styles.css">
+</head>
 <body>
-    <h1>Reservas de la furgoneta</h1>
-    <button type="button" class="btn btn-link"><a href="./reservas.html">Link</a></button>
 
-    
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
-<script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL" crossorigin="anonymous"></script>
+    <header class="page-header">
+        <h1>Reservas de la furgoneta</h1>
+        <a class="btn" href="./reservas.html">Nueva reserva</a>
+    </header>
+
+    <main>
+        <section>
+            <h2>Reservas ya hechas</h2>
+
+            <!-- Tu script puede rellenar esta lista con <li class="reserva"> -->
+            <ul id="listaReservas" class="reservas-list">
+                <li class="empty">Todavía no hay reservas.</li>
+            </ul>
+        </section>
+    </main>
+
 </body>
 </html>
